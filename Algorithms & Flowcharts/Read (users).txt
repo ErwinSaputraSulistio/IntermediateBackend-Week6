@@ -1,0 +1,5 @@
+1.) Start.  
+2.) First, take GET or the READ request from the user (with no data input, ofc).  
+3.) After that, we just need to query user's database with a line syntax that selecting all data from the database then returns all of them in JSON format.  
+4.) Lastly, the result will be shown to you.  
+5.) End.

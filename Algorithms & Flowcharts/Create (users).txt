@@ -1,0 +1,9 @@
+1.) Start.   
+2.) First, take inputs from the user (real name, username, email, password).  
+3.) After that, make some variables of user's input (realName, userName, userEmail, userPassword) with values from the body request of them (req.body).  
+4.) Now, create a variable named "hashedUserPassword", that contains a value from variable "userPassword" then hashes it (in this case, I was using bCrypt to help me for the hashing process when an input came from the user).  
+5.) Then, create a variable again named "newData" that'll be sent as a parameter to database query process, contains an object value with keys and values based by the user's first variables input in number 2 (realName, userName, userEmail, userPassword).  
+6.) After that, create a function named "newUserData" with a paramater value passed from "newData", in this function we'll query the user's database and order it to insert the data into user's database.  
+7.) Now, we make a statement for the result, if there's no error then give the result, else console an error message.  
+8.) At last, execute the function newUserData(newData) and in no time the result will shown based on the statement in number 7 as JSON format.   
+9.) End.

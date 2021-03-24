@@ -1,0 +1,5 @@
+1.) Start.  
+2.) First, take input from the user (targeted id to be deleted).  
+3.) After that, we just need to query user's database to delete the targeted data based on inputted user's id.  
+4.) Lastly, the targeted data will be erased.  
+5.) End.
