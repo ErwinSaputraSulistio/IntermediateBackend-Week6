@@ -12,6 +12,7 @@ A task of Arkademy (Intermediate Backend - Week 6), to increase the security of 
 1.) All about this project  
 2.) How to install?  
 3.) Postman's API Documentation - URL link (CRUD) => https://documenter.getpostman.com/view/14851668/Tz5nbJTD
+4.) Front-End : https://github.com/ErwinSaputraSulistio/BeginnerFrontend-Week5  
 
 ## How to install & start?  
     git clone https://github.com/ErwinSaputraSulistio/IntermediateBackend-Week6
