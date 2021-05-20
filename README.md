@@ -1,18 +1,23 @@
-# Read Me First
-A task of Arkademy (Intermediate Backend - Week 6), to increase the security of backend server further, with authentication, JWT, verification, and more.
+<p align="center">
+    <img src="https://user-images.githubusercontent.com/77045083/119020412-65f3b400-b9c8-11eb-8aa8-c30a7cc30cae.png" width="300"/>
+</p>
 
-#### For the requirements of this task, Arkademy asked me to include a few things in this project :  
-1.) Requirements from Beginner Backend - Week 4 (all)    
-2.) Authentication & Authorization (user & admin)    
-3.) Multer (upload images)   
-4.) bCrypt (hash passwords)    
-5.) JWT (JSON Web Token)  
-6.) Redis (saving data in memory)  
+# Tickitz - Backend  
+    
+#### Newest Update (24/03/2021) :  
+- Increase the security of backend server further, with authentication, JWT, verification, and more.
+
+#### Added Functions - (24/03/2021) :    
+1.) Authentication & Authorization (user & admin)    
+2.) Multer (upload images)   
+3.) bCrypt (hash passwords)    
+4.) JWT (JSON Web Token)  
+5.) Redis (saving data in memory)  
 
 #### Then, what's included in this README.md?    
-1.) All about this project  
+1.) Newest update of this project's backend!  
 2.) How to install?  
-3.) Postman's API Documentation - URL link (CRUD) => https://documenter.getpostman.com/view/14851668/Tz5nbJTD  
+3.) Postman's API Documentation : https://documenter.getpostman.com/view/14851668/Tz5nbJTD  
 4.) Front-End : https://github.com/ErwinSaputraSulistio/BeginnerFrontend-Week5  
 
 ## How to install & start?  
