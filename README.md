@@ -18,7 +18,7 @@
 1.) Newest update of this project's backend!  
 2.) How to install?  
 3.) Postman's API Documentation : https://documenter.getpostman.com/view/14851668/Tz5nbJTD  
-4.) Front-End : https://github.com/ErwinSaputraSulistio/BeginnerFrontend-Week5  
+4.) Front-End : https://github.com/ErwinSaputraSulistio/Tickitz-FE
 
 ## How to install & start?  
     git clone https://github.com/ErwinSaputraSulistio/Tickitz-BE
