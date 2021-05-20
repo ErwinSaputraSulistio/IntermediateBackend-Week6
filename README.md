@@ -21,7 +21,7 @@
 4.) Front-End : https://github.com/ErwinSaputraSulistio/BeginnerFrontend-Week5  
 
 ## How to install & start?  
-    git clone https://github.com/ErwinSaputraSulistio/IntermediateBackend-Week6
-    cd IntermediateBackend-Week6
+    git clone https://github.com/ErwinSaputraSulistio/Tickitz-BE
+    cd Tickitz-BE
     npm install
     nodemon app.js
