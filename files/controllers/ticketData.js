@@ -7,10 +7,11 @@ const client = redis.createClient(16379)
 // create
 exports.createTicketData = (req, res) => {
   const movieImgUrl = 'http://localhost:2000/img/movie/' + req.file.filename
-  const { 
-    movieName, 
-    movieGenre, 
-    releaseDate, 
+  const {
+    movieName,
+    movieGenre,
+    ticketPrice,
+    releaseDate,
     directedBy,
     movieDuration,
     movieCasts,
@@ -20,6 +21,7 @@ exports.createTicketData = (req, res) => {
     ticketId: uuidv4(),
     movieName,
     movieGenre,
+    ticketPrice,
     releaseDate,
     directedBy,
     movieDuration,
@@ -38,8 +40,8 @@ exports.createTicketData = (req, res) => {
 exports.readAllTicketData = (req, res) => {
   ticketDataModel.getAllTicketData()
     .then((result) => {
-      client.setex("redisMovieTicketData", 60 * 1, JSON.stringify(result))
-      return statusCode.statRes(res, 200, result) 
+      client.setex('redisMovieTicketData', 60 * 1, JSON.stringify(result))
+      return statusCode.statRes(res, 200, result)
     })
     .catch((err) => { console.log(err) })
 }
@@ -47,7 +49,7 @@ exports.readTicketDataById = (req, res) => {
   const ticketId = req.params.id
   ticketDataModel.getTicketDataById(ticketId)
     .then((result) => {
-      client.setex("redisMovieTicketData" + result[0].ticketId, 60 * 1, JSON.stringify(result))
+      client.setex('redisMovieTicketData' + result[0].ticketId, 60 * 1, JSON.stringify(result))
       return statusCode.statRes(res, 200, result)
     })
     .catch((err) => { console.log(err) })
@@ -86,10 +88,11 @@ exports.readTicketDataPerPage = (req, res) => {
 exports.updateTicketData = (req, res) => {
   const ticketId = req.params.id
   const movieImgUrl = 'http://localhost:2000/img/movie/' + req.file.filename
-  const { 
-    movieName, 
-    movieGenre, 
-    releaseDate, 
+  const {
+    movieName,
+    movieGenre,
+    ticketPrice,
+    releaseDate,
     directedBy,
     movieDuration,
     movieCasts,
@@ -98,6 +101,7 @@ exports.updateTicketData = (req, res) => {
   const changeData = {
     movieName,
     movieGenre,
+    ticketPrice,
     releaseDate,
     directedBy,
     movieDuration,

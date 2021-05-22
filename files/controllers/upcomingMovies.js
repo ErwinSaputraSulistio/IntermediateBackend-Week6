@@ -29,8 +29,8 @@ exports.createUpcomingData = (req, res) => {
 // read
 exports.readAllUpcomingData = (req, res) => {
   upcomingDataModel.getAllUpcomingData()
-    .then((result) => { 
-      client.setex("redisUpcomingMovieData", 60 * 1, JSON.stringify(result))
+    .then((result) => {
+      client.setex('redisUpcomingMovieData', 60 * 1, JSON.stringify(result))
       return statusCode.statRes(res, 200, result)
     })
     .catch((err) => { console.log(err) })
@@ -38,9 +38,9 @@ exports.readAllUpcomingData = (req, res) => {
 exports.readUpcomingDataById = (req, res) => {
   const upcomingId = req.params.id
   upcomingDataModel.getUpcomingDataById(upcomingId)
-    .then((result) => { 
-      client.setex("redisUpcomingMovieData" + result[0].upcomingId, 60 * 1, JSON.stringify(result))
-      return statusCode.statRes(res, 200, result) 
+    .then((result) => {
+      client.setex('redisUpcomingMovieData' + result[0].upcomingId, 60 * 1, JSON.stringify(result))
+      return statusCode.statRes(res, 200, result)
     })
     .catch((err) => { console.log(err) })
 }

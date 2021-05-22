@@ -1,20 +1,20 @@
-const nm = require("nodemailer")
+const nm = require('nodemailer')
 
 // nodemailer - account to send email
 const senderAccount = nm.createTransport({
-   service: 'gmail',
-   auth: {
-      user: process.env.NODEMAILER_MAIL,
-      pass: process.env.NODEMAILER_PASS
-   }
+  service: 'gmail',
+  auth: {
+    user: process.env.NODEMAILER_MAIL,
+    pass: process.env.NODEMAILER_PASS
+  }
 })
 
 exports.sendEmail = (jwtToken, userEmail) => {
-   const sendThisMail =  {
-      from: 'ciwin.tickitz@gmail.com',
-      to: userEmail,
-      subject: 'Tickitz: Account Verification',
-      html: 
+  const sendThisMail = {
+    from: 'ciwin.tickitz@gmail.com',
+    to: userEmail,
+    subject: 'Tickitz: Account Verification',
+    html:
       `<!DOCTYPE html>
       <html lang="en">
          <head>
@@ -54,13 +54,13 @@ exports.sendEmail = (jwtToken, userEmail) => {
                <img style="width: 240px; height: 80px;" src="https://image.myanimelist.net/ui/uf6p6rEk2dlZoh8DIyYQTScPXcYWVkorZzR5QFff8Dz3qY2oXvvW5x3Hrb-W5JxGHRwmguU8B08LZEEOtbv2G3WKIJ9sNYmr_hbsa72u_rSA04XHa2uGxv_npt3alTiqCO1wZi7NrJbnS1vOPJyjoZkSTvU9Syn4esm53zmf6UE"/>
                <p style="font-size: 15px;">Aloha ${userEmail}, selamat datang dan selamat bergabung di Tickitz! Agar kamu bisa login dan mengakses akun kamu lebih lanjut, harap verifikasi akun kamu terlebih dahulu yah dengan cara menekan tombol verifikasi di bawah ini :</p>
                <div style="margin: auto; margin-top: 40px; width: 100%;">
-                  <a class="verifyLink" href="http://localhost:2000/v1/users/verify/${jwtToken}"><div class="verifyBtn">Verifikasi Akun</div></a>
+                  <a class="verifyLink" href="http://localhost:3000/verification/${jwtToken}"><div class="verifyBtn">Verifikasi Akun</div></a>
                </div>
             </div>
          </body>
       </html>`
       // '<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT19EDf-1IB_C58IMPHisw1geAsdKW52nnqfo3R3LGDI8IIZNb338foPjHNLcDWDZ_82ZA&usqp=CAU">'
-      // + '<h1>Halo, umm... Aku masih belum kenal kamu, nih!</h1>' 
+      // + '<h1>Halo, umm... Aku masih belum kenal kamu, nih!</h1>'
       // + '<p>Jadi untuk sementara aku panggil ' + realName + ' aja yah ~</p>'
       // + '<p>' + realName + ', Langkah pertama kamu sebagai Moviegoers Tickitz udah berhasil, nih!</p>'
       // + '<p>Sekarang saatnya untuk memulai langkah kedua, yaitu login! Apa kamu sudah siap?</p>'
@@ -68,11 +68,8 @@ exports.sendEmail = (jwtToken, userEmail) => {
       // + '<p>Sekalian jangan lupa verifikasi nama asli kamu nanti yah, ada di dalam Setting kok ~ biar aku tau nanti mau manggil kamu apa nih ^^</p><br>'
       // + '<p>Salam hangat,</p><br>'
       // + '<h3>Tickitz</h3>'
-   }
-   senderAccount.sendMail(sendThisMail, (err, info) => {
-      if (err) {console.log(err)}
-      else {console.log("Email berhasil di kirim ke " + userEmail)}
-   })
+  }
+  senderAccount.sendMail(sendThisMail, (err, info) => {
+    if (err) { console.log(err) } else { console.log('Email berhasil di kirim ke ' + userEmail) }
+  })
 }
-
-

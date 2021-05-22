@@ -12,12 +12,12 @@ exports.newUpcomingData = (newData) => {
 // read
 exports.getAllUpcomingData = () => {
   return new Promise((resolve, reject) => {
-      db.query('SELECT * FROM upcoming_movies ORDER BY upcomingName ASC', (err, result) => {
-        result.length === 0 && resolve('Tidak dapat menemukan film dengan ID yang dicari!')
-        if (!err) { resolve(result) } else { reject(err) }
-      })
+    db.query('SELECT * FROM upcoming_movies ORDER BY upcomingName ASC', (err, result) => {
+      result.length === 0 && resolve('Tidak dapat menemukan film dengan ID yang dicari!')
+      if (!err) { resolve(result) } else { reject(err) }
     })
-  }
+  })
+}
 exports.getUpcomingDataById = (upcomingId) => {
   return new Promise((resolve, reject) => {
     db.query('SELECT * FROM upcoming_movies WHERE upcomingId = ?', upcomingId, (err, result) => {

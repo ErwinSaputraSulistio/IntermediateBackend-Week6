@@ -4,7 +4,7 @@ const statusCode = require('./status')
 
 // create
 exports.createTransactionData = (req, res) => {
-  const { userId, ticketId, showDate, startTime, endTime, seatPosition, howManyTickets } = req.body
+  const { userId, ticketId, showDate, startTime, endTime, seatPosition, howManyTickets, cinemaName, cinemaUrl, totalPrice } = req.body
   const newData = {
     transactionId: uuidv4(),
     userId,
@@ -14,6 +14,9 @@ exports.createTransactionData = (req, res) => {
     endTime,
     seatPosition,
     howManyTickets,
+    cinemaName,
+    cinemaUrl,
+    totalPrice,
     createdAt: new Date(),
     updatedAt: new Date()
   }
@@ -42,11 +45,17 @@ exports.readTransactionDataPerPage = (req, res) => {
     } else { statusCode.queryNaN(res) }
   } else { statusCode.invalidQuery(res) }
 }
-exports.readTransactionDataById = (req, res) => {
-  const userId = req.params.id
-  transactionDataModel.getTransactionDataById(userId)
+exports.readTransactionDataByTransactionId = (req, res) => {
+  const transactionId = req.params.id
+  transactionDataModel.getTransactionDataByTransactionId(transactionId)
     .then((result) => { statusCode.statRes(res, 200, result) })
-    .catch((err) => { console.log(err) })
+    .catch((err) => { res.status(404).json({callResult:"Failed", errorCode: 404, errorMessage: err}) })
+}
+exports.readTransactionDataByBuyerId = (req, res) => {
+  const buyerId = req.params.id
+  transactionDataModel.getTransactionDataByBuyerId(buyerId)
+    .then((result) => { statusCode.statRes(res, 200, result) })
+    .catch((err) => { res.status(404).json({callResult:"Failed", errorCode: 404, errorMessage: err}) })
 }
 
 // update
@@ -65,6 +74,21 @@ exports.updateTransactionData = (req, res) => {
   }
   transactionDataModel.changeTransactionData(changeData, transactionId)
     .then(() => { statusCode.statRes(res, 201, 'Berhasil ubah data transaksi!') })
+    .catch((err) => { console.log(err) })
+}
+
+// verify payment
+exports.verifyUserPayment = (req, res) => {
+  const transactionId = req.params.id
+  const { buyerName, buyerEmail, buyerPhoneNumber, paymentMethod } = req.body
+  const verifyPaymentData = {
+    buyerName,
+    buyerEmail,
+    buyerPhoneNumber,
+    paymentMethod
+  }
+  transactionDataModel.verifyTransactionPayment(verifyPaymentData, transactionId)
+    .then(() => { statusCode.statRes(res, 201, 'Pembayaran berhasil, kini tiket dapat kamu gunakan ~') })
     .catch((err) => { console.log(err) })
 }
 

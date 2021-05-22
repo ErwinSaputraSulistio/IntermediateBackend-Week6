@@ -29,12 +29,12 @@ exports.createUserData = (req, res) => {
     userDataModel.newUserData(userEmail, newData)
       .then(() => {
         const payload = { userId }
-        jwt.sign(payload, process.env.JWT_SECRET_KEY, { expiresIn: 60 * 15 } , (err, token) => {
+        jwt.sign(payload, process.env.JWT_SECRET_KEY, { expiresIn: 60 * 15 }, (err, token) => {
           statusCode.loginWithJWT(res, 200, userId, token)
           NM.sendEmail(token, userEmail)
         })
       })
-      .catch((err) => { res.json({ callResult: err.message, statusCode: 404 }) })
+      .catch((err) => { res.status(404).json({ callResult: err.message, statusCode: 404 }) })
   } catch (err) { res.send('ERROR : ' + err.message) }
 }
 
@@ -56,11 +56,11 @@ exports.updateUserData = (req, res) => {
   try {
     const userId = req.params.id
     const { realName, userEmail, userPassword, userJobs, userNotification, profileImages } = req.body
-    // const hashedUserPassword = bcrypt.hashSync(userPassword, salt)
+    const hashedUserPassword = bcrypt.hashSync(userPassword, salt)
     const changeData = {
       realName,
       userEmail,
-      userPassword,
+      userPassword: hashedUserPassword,
       userJobs,
       userNotification,
       profileImages,
@@ -86,15 +86,13 @@ exports.deleteUserData = (req, res) => {
 exports.postUserLogin = (req, res) => {
   const { loginEmail, loginPassword } = req.body
   userDataModel.userLogin(loginEmail)
-    .then((result) => { 
+    .then((result) => {
       const getUserData = result[0]
       const checkPassword = bcrypt.compareSync(loginPassword, getUserData.userPassword)
-      if (checkPassword === false) { res.json({callResult: 'Failed', statusCode: 404, errorMessage: 'Gagal login, password salah!'}) }
-      else { 
-        if (getUserData.isVerified === 0) { res.json({userEmail: getUserData.userEmail, isVerified: false, callResult: 'Failed', statusCode: 403, errorMessage: 'User belum di verifikasi!'}) }
-        else {
+      if (checkPassword === false) { res.status(404).json({ callResult: 'Failed', statusCode: 404, errorMessage: 'Gagal login, password salah!' }) } else {
+        if (getUserData.isVerified === 0) { res.status(403).json({ userEmail: getUserData.userEmail, isVerified: false, callResult: 'Failed', statusCode: 403, errorMessage: 'User belum di verifikasi!' }) } else {
           const payload = { userEmail: getUserData.userEmail, userRealName: getUserData.realName, userRole: getUserData.userRole }
-          jwt.sign(payload, process.env.JWT_SECRET_KEY, { expiresIn: '1h' } , (err, token) => {
+          jwt.sign(payload, process.env.JWT_SECRET_KEY, { expiresIn: '1h' }, (err, token) => {
             statusCode.loginWithJWT(res, 200, result, token)
           })
         }
@@ -111,37 +109,31 @@ exports.changeUserAvatar = (req, res) => {
     userDataModel.uploadUserProfilePicture(userId, profilePictureURL)
       .then(() => { statusCode.statRes(res, 201, 'Berhasil mengganti gambar profil user!') })
       .catch((err) => { res.send(err.message) })
-  } 
-  catch (err) { res.json({ callResult: 'Failed', statusCode: 400, errorMessage: 'Gagal mengubah avatar user!' }) }
+  } catch (err) { res.status(400).json({ callResult: 'Failed', statusCode: 400, errorMessage: 'Gagal mengubah avatar user!' }) }
 }
 
 // user - verification
 exports.verifyNewUser = (req, res) => {
   const checkJwtToken = req.params.id
-  try{
-    if(checkJwtToken === null || checkJwtToken == undefined) { res.json({ checkResult: "Failed", statusCode: 401, errorDetail: "Invalid JWT token!" }) }
-    else{
+  try {
+    if (checkJwtToken === null || checkJwtToken == undefined) { res.json({ checkResult: 'Failed', statusCode: 401, errorDetail: 'Invalid JWT token!' }) } else {
       jwt.verify(checkJwtToken, process.env.JWT_SECRET_KEY, (err, user) => {
         console.log(user)
         cancelCreateUser = (error) => {
-          userDataModel.removeUserData("tes")
-          .then(() => { res.json({ checkResult: "Failed", statusCode: 401, jwtError: error }) })
-          .catch((err) => { console.log(err) })
+          userDataModel.removeUserData("userId")
+            .then(() => { res.status(401).json({ checkResult: 'Failed', statusCode: 401, jwtError: error }) })
+            .catch((err) => { console.log(err) })
         }
-        if(err) {
-          let errMsg = ""
-          if(err.name === "JsonWebTokenError") {errMsg = "Invalid JWT token, canceling account creation!"}
-          else if(err.name ==="TokenExpiredError") {errMsg = "JWT token already expired, canceling account creation!"}
-          else {errMsg = "JWT token not active, canceling account creation!"}
+        if (err) {
+          let errMsg = ''
+          if (err.name === 'JsonWebTokenError') { errMsg = 'Invalid JWT token, canceling account creation!' } else if (err.name === 'TokenExpiredError') { errMsg = 'JWT token already expired, canceling account creation!' } else { errMsg = 'JWT token not active, canceling account creation!' }
           cancelCreateUser(errMsg)
-        } 
-        else{
+        } else {
           userDataModel.userVerificationSuccess(user.userId)
-          .then(() => {res.send('Verifikasi user berhasil, silahkan login!')})
-          .catch((err) => {res.send(err.message)})
-         }
+            .then(() => { res.send('Verifikasi user berhasil, silahkan login!') })
+            .catch((err) => { res.send(err.message) })
+        }
       })
     }
-  }
-  catch (err) { res.send('ERROR : ' + err.message) }
+  } catch (err) { res.send('ERROR : ' + err.message) }
 }

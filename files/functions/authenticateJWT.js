@@ -1,4 +1,4 @@
-const jwt = require("jsonwebtoken")
+const jwt = require('jsonwebtoken')
 
 // JWT - sign
 // exports.signJwtToken = (req, email, name, role) => {
@@ -18,26 +18,22 @@ const jwt = require("jsonwebtoken")
 
 // JWT - verify
 exports.verifyJwtToken = (req, res, next) => {
-   const authHeader = req.headers.authorization
-   const token = authHeader && authHeader.split(" ")[1]
-   if(token === undefined) {res.json({ checkResult: "Failed", statusCode: 401, errorDetail: "JWT token can't be empty!" })}
-   else {
-      jwt.verify(token, process.env.JWT_SECRET_KEY, (err, user) => {
-         return new Promise((resolve, reject) => {
-            if(err) {
-               let errMsg = ""
-               if(err.name === "JsonWebTokenError") {errMsg = "Invalid token!"}
-               else if(err.name ==="TokenExpiredError") {errMsg = "JWT token already expired!"}
-               else {errMsg = "JWT token not active!"}
-               reject(errMsg)
-            } 
-            else { resolve(user) }
-         })
-         .then((res) => {
-            req.user = res
-            next()
-         })
-         .catch((err) => { res.json({ checkResult: "Failed", statusCode: 401, jwtError: err }) })
+  const authHeader = req.headers.authorization
+  const token = authHeader && authHeader.split(' ')[1]
+  if (token === undefined) { res.json({ checkResult: 'Failed', statusCode: 401, errorDetail: "JWT token can't be empty!" }) } else {
+    jwt.verify(token, process.env.JWT_SECRET_KEY, (err, user) => {
+      return new Promise((resolve, reject) => {
+        if (err) {
+          let errMsg = ''
+          if (err.name === 'JsonWebTokenError') { errMsg = 'Invalid token!' } else if (err.name === 'TokenExpiredError') { errMsg = 'JWT token already expired!' } else { errMsg = 'JWT token not active!' }
+          reject(errMsg)
+        } else { resolve(user) }
       })
-   }
+        .then((res) => {
+          req.user = res
+          next()
+        })
+        .catch((err) => { res.status(401).json({ checkResult: 'Failed', statusCode: 401, jwtError: err }) })
+    })
+  }
 }

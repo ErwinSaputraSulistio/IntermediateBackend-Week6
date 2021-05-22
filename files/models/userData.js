@@ -4,8 +4,7 @@ const db = require('../configs/db')
 exports.newUserData = (userEmail, newData) => {
   return new Promise((resolve, reject) => {
     db.query("SELECT * FROM user_data WHERE (userEmail = '" + userEmail + "')", (err, res) => {
-      if (res.length == 0) {db.query('INSERT INTO user_data SET ?', newData, (err, result) => {resolve(result)})} 
-      else {reject(new Error('Gagal buat user baru, email sudah terdaftar!'))}
+      if (res.length == 0) { db.query('INSERT INTO user_data SET ?', newData, (err, result) => { resolve(result) }) } else { reject(new Error('Gagal buat user baru, email sudah terdaftar!')) }
     })
   })
 }
@@ -49,11 +48,10 @@ exports.removeUserData = (userID) => {
 exports.userLogin = (userEmailQuery) => {
   return new Promise((resolve, reject) => {
     db.query("SELECT * FROM user_data WHERE (userEmail = '" + userEmailQuery + "' OR userName = '" + userEmailQuery + "')", (err, result) => {
-      if (result.length == 0) { 
-        const wrongEmail = {callResult: 'Failed', statusCode: 404, errorMessage: 'Gagal login, email belum terdaftar!'}
-        reject(wrongEmail) 
-      } 
-      else { resolve(result) }
+      if (result.length == 0) {
+        const wrongEmail = { callResult: 'Failed', statusCode: 404, errorMessage: 'Gagal login, email belum terdaftar!' }
+        reject(wrongEmail)
+      } else { resolve(result) }
     })
   })
 }
