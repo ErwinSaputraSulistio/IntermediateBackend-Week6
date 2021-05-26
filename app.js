@@ -5,7 +5,7 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const morgan = require('morgan')
 const app = express()
-const port = process.env.PORT
+const port = process.env.PORT || 3000
 const route = require('./files/routes')
 
 // app - settings
