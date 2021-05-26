@@ -15,7 +15,6 @@ exports.loginWithJWT = (res, status, result, key) => {
   const output = {}
   output.callResult = 'Success'
   output.statusCode = status
-  output.outputData = result
-  output.jwtSecretKey = key
+  output.outputData = [...result, key]
   res.status(status).json(output)
 }
