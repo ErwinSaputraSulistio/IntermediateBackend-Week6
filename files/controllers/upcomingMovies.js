@@ -17,9 +17,7 @@ exports.createUpcomingData = (req, res) => {
     movieDuration,
     directedBy,
     movieCasts,
-    upcomingImgUrl,
-    createdAt: new Date(),
-    updatedAt: new Date()
+    upcomingImgUrl
   }
   upcomingDataModel.newUpcomingData(newData)
     .then(() => { statusCode.statRes(res, 201, 'Berhasil memasukkan film baru!') })
@@ -87,8 +85,7 @@ exports.updateUpcomingData = (req, res) => {
     movieDuration,
     directedBy,
     movieCasts,
-    upcomingImgUrl,
-    updatedAt: new Date()
+    upcomingImgUrl
   }
   upcomingDataModel.changeUpcomingData(changeData, upcomingId)
     .then(() => { statusCode.statRes(res, 201, 'Berhasil ubah data film!') })

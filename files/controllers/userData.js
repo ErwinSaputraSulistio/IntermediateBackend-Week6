@@ -11,22 +11,15 @@ const salt = bcrypt.genSaltSync(10)
 // create
 exports.createUserData = (req, res) => {
   try {
-    const { realName, userName, userEmail, userPassword, profileImages, userJobs, userRole } = req.body
+    const { userEmail, userPassword } = req.body
     const userId = uuidv4()
     const hashedUserPassword = bcrypt.hashSync(userPassword, salt)
     const newData = {
       userId,
-      realName,
-      userName,
       userEmail,
-      userPassword: hashedUserPassword,
-      profileImages,
-      userJobs,
-      userRole,
-      createdAt: new Date(),
-      updatedAt: new Date()
+      userPassword: hashedUserPassword
     }
-    userDataModel.newUserData(userEmail, newData)
+    userDataModel.newUserData(newData)
       .then(() => {
         const payload = { userId }
         jwt.sign(payload, process.env.JWT_SECRET_KEY, { expiresIn: 60 * 15 }, (err, token) => {
@@ -55,18 +48,12 @@ exports.readUserDataById = (req, res) => {
 exports.updateUserData = (req, res) => {
   try {
     const userId = req.params.id
-    const { realName, userEmail, userPassword, userJobs, userNotification, profileImages } = req.body
+    const { realName, userPassword, userJobs } = req.body
     const hashedUserPassword = bcrypt.hashSync(userPassword, salt)
     const changeData = {
       realName,
-      userEmail,
       userPassword: hashedUserPassword,
-      userJobs,
-      userNotification,
-      profileImages,
-      // userName,
-      // userRole,
-      updatedAt: new Date()
+      userJobs
     }
     userDataModel.changeUserData(changeData, userId)
       .then(() => { statusCode.statRes(res, 201, 'Berhasil ubah data User!') })
@@ -88,10 +75,10 @@ exports.postUserLogin = (req, res) => {
   userDataModel.userLogin(loginEmail)
     .then((result) => {
       const getUserData = result[0]
-      const checkPassword = bcrypt.compareSync(loginPassword, getUserData.userPassword)
+      const checkPassword = bcrypt.compareSync(loginPassword, getUserData.userpassword)
       if (checkPassword === false) { res.status(404).json({ callResult: 'Failed', statusCode: 404, errorMessage: 'Gagal login, password salah!' }) } else {
-        if (getUserData.isVerified === 0) { res.status(403).json({ userEmail: getUserData.userEmail, isVerified: false, callResult: 'Failed', statusCode: 403, errorMessage: 'User belum di verifikasi!' }) } else {
-          const payload = { userEmail: getUserData.userEmail, userRealName: getUserData.realName, userRole: getUserData.userRole }
+        if (getUserData.isverified === false) { res.status(403).json({ useremail: getUserData.useremail, isverified: false, callResult: 'Failed', statusCode: 403, errorMessage: 'User belum di verifikasi!' }) } else {
+          const payload = { useremail: getUserData.useremail, realname: getUserData.realname, userrole: getUserData.userrole }
           jwt.sign(payload, process.env.JWT_SECRET_KEY, { expiresIn: '1h' }, (err, token) => {
             statusCode.loginWithJWT(res, 200, result, token)
           })
@@ -118,13 +105,13 @@ exports.verifyNewUser = (req, res) => {
   try {
     if (checkJwtToken === null || checkJwtToken == undefined) { res.json({ checkResult: 'Failed', statusCode: 401, errorDetail: 'Invalid JWT token!' }) } else {
       jwt.verify(checkJwtToken, process.env.JWT_SECRET_KEY, (err, user) => {
-        console.log(user)
         cancelCreateUser = (error) => {
           userDataModel.removeUserData("userId")
             .then(() => { res.status(401).json({ checkResult: 'Failed', statusCode: 401, jwtError: error }) })
             .catch((err) => { console.log(err) })
         }
         if (err) {
+          console.log(err)
           let errMsg = ''
           if (err.name === 'JsonWebTokenError') { errMsg = 'Invalid JWT token, canceling account creation!' } else if (err.name === 'TokenExpiredError') { errMsg = 'JWT token already expired, canceling account creation!' } else { errMsg = 'JWT token not active, canceling account creation!' }
           cancelCreateUser(errMsg)

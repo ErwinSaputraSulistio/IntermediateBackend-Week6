@@ -54,7 +54,7 @@ exports.sendEmail = (jwtToken, userEmail) => {
                <img style="width: 240px; height: 80px;" src="https://image.myanimelist.net/ui/uf6p6rEk2dlZoh8DIyYQTScPXcYWVkorZzR5QFff8Dz3qY2oXvvW5x3Hrb-W5JxGHRwmguU8B08LZEEOtbv2G3WKIJ9sNYmr_hbsa72u_rSA04XHa2uGxv_npt3alTiqCO1wZi7NrJbnS1vOPJyjoZkSTvU9Syn4esm53zmf6UE"/>
                <p style="font-size: 15px;">Aloha ${userEmail}, selamat datang dan selamat bergabung di Tickitz! Agar kamu bisa login dan mengakses akun kamu lebih lanjut, harap verifikasi akun kamu terlebih dahulu yah dengan cara menekan tombol verifikasi di bawah ini :</p>
                <div style="margin: auto; margin-top: 40px; width: 100%;">
-                  <a class="verifyLink" href="http://localhost:3000/verification/${jwtToken}"><div class="verifyBtn">Verifikasi Akun</div></a>
+                  <a class="verifyLink" href="https://ciwin-react-tickitz-arkademy.netlify.app/verification/${jwtToken}"><div class="verifyBtn">Verifikasi Akun</div></a>
                </div>
             </div>
          </body>

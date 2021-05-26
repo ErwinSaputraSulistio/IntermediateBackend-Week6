@@ -16,10 +16,9 @@ exports.createTransactionData = (req, res) => {
     howManyTickets,
     cinemaName,
     cinemaUrl,
-    totalPrice,
-    createdAt: new Date(),
-    updatedAt: new Date()
+    totalPrice
   }
+  console.log(newData)
   transactionDataModel.newTransactionData(newData)
     .then(() => { statusCode.statRes(res, 200, 'Berhasil menambahkan transaksi baru!') })
     .catch((err) => { console.log(err) })

@@ -27,9 +27,7 @@ exports.createTicketData = (req, res) => {
     movieDuration,
     movieCasts,
     movieSynopsis,
-    movieImgUrl,
-    createdAt: new Date(),
-    updatedAt: new Date()
+    movieImgUrl
   }
   ticketDataModel.newTicketData(newData)
     .then(() => { statusCode.statRes(res, 201, 'Berhasil memasukkan film baru!') })
@@ -107,8 +105,7 @@ exports.updateTicketData = (req, res) => {
     movieDuration,
     movieCasts,
     movieSynopsis,
-    movieImgUrl,
-    updatedAt: new Date()
+    movieImgUrl
   }
   ticketDataModel.changeTicketData(changeData, ticketId)
     .then(() => { statusCode.statRes(res, 201, 'Berhasil ubah data film!') })
