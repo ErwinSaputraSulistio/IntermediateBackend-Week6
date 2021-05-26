@@ -13,7 +13,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cors())
 app.use(morgan('dev'))
-app.listen(port, '127.0.0.1', () => { console.log('Server telah di-aktivasi dengan port ' + port) })
+app.listen(port, '0.0.0.0', () => { console.log('Server telah di-aktivasi dengan port ' + port) })
 
 // routers
 app.use('/v1', route)
