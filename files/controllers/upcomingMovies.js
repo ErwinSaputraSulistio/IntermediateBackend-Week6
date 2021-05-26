@@ -1,12 +1,12 @@
 const upcomingDataModel = require('../models/upcomingMovies')
 const { v4: uuidv4 } = require('uuid')
 const statusCode = require('./status')
-const redis = require('redis')
-const client = redis.createClient(16379)
+// const redis = require('redis')
+// const client = redis.createClient(16379)
 
 // create
 exports.createUpcomingData = (req, res) => {
-  const upcomingImgUrl = 'http://localhost:2000/img/movie/' + req.file.filename
+  const upcomingImgUrl = 'https://ciwin-react-tickitz-arkademy.netlify.app/img/movie/' + req.file.filename
   const { upcomingName, upcomingGenre, upcomingSynopsis, releaseDate, movieDuration, directedBy, movieCasts } = req.body
   const newData = {
     upcomingId: uuidv4(),
@@ -28,7 +28,7 @@ exports.createUpcomingData = (req, res) => {
 exports.readAllUpcomingData = (req, res) => {
   upcomingDataModel.getAllUpcomingData()
     .then((result) => {
-      client.setex('redisUpcomingMovieData', 60 * 1, JSON.stringify(result))
+      // client.setex('redisUpcomingMovieData', 60 * 1, JSON.stringify(result))
       return statusCode.statRes(res, 200, result)
     })
     .catch((err) => { console.log(err) })
@@ -37,7 +37,7 @@ exports.readUpcomingDataById = (req, res) => {
   const upcomingId = req.params.id
   upcomingDataModel.getUpcomingDataById(upcomingId)
     .then((result) => {
-      client.setex('redisUpcomingMovieData' + result[0].upcomingId, 60 * 1, JSON.stringify(result))
+      // client.setex('redisUpcomingMovieData' + result[0].upcomingId, 60 * 1, JSON.stringify(result))
       return statusCode.statRes(res, 200, result)
     })
     .catch((err) => { console.log(err) })
@@ -75,7 +75,7 @@ exports.readUpcomingDataPerPage = (req, res) => {
 // update
 exports.updateUpcomingData = (req, res) => {
   const upcomingId = req.params.id
-  const upcomingImgUrl = 'http://localhost:2000/img/movie/' + req.file.filename
+  const upcomingImgUrl = 'https://ciwin-react-tickitz-arkademy.netlify.app/img/movie/' + req.file.filename
   const { upcomingName, upcomingGenre, upcomingSynopsis, releaseDate, movieDuration, directedBy, movieCasts } = req.body
   const changeData = {
     upcomingName,

@@ -92,7 +92,7 @@ exports.postUserLogin = (req, res) => {
 exports.changeUserAvatar = (req, res) => {
   try {
     const userId = req.params.id
-    const profilePictureURL = 'http://localhost:2000/img/avatar/' + req.file.filename
+    const profilePictureURL = 'https://ciwin-react-tickitz-arkademy.netlify.app/img/avatar/' + req.file.filename
     userDataModel.uploadUserProfilePicture(userId, profilePictureURL)
       .then(() => { statusCode.statRes(res, 201, 'Berhasil mengganti gambar profil user!') })
       .catch((err) => { res.send(err.message) })

@@ -1,12 +1,12 @@
 const ticketDataModel = require('../models/ticketData')
 const { v4: uuidv4 } = require('uuid')
 const statusCode = require('./status')
-const redis = require('redis')
-const client = redis.createClient(16379)
+// const redis = require('redis')
+// const client = redis.createClient(16379)
 
 // create
 exports.createTicketData = (req, res) => {
-  const movieImgUrl = 'http://localhost:2000/img/movie/' + req.file.filename
+  const movieImgUrl = 'https://ciwin-react-tickitz-arkademy.netlify.app/img/movie/' + req.file.filename
   const {
     movieName,
     movieGenre,
@@ -38,7 +38,7 @@ exports.createTicketData = (req, res) => {
 exports.readAllTicketData = (req, res) => {
   ticketDataModel.getAllTicketData()
     .then((result) => {
-      client.setex('redisMovieTicketData', 60 * 1, JSON.stringify(result))
+      // client.setex('redisMovieTicketData', 60 * 1, JSON.stringify(result))
       return statusCode.statRes(res, 200, result)
     })
     .catch((err) => { console.log(err) })
@@ -47,7 +47,7 @@ exports.readTicketDataById = (req, res) => {
   const ticketId = req.params.id
   ticketDataModel.getTicketDataById(ticketId)
     .then((result) => {
-      client.setex('redisMovieTicketData' + result[0].ticketId, 60 * 1, JSON.stringify(result))
+      // client.setex('redisMovieTicketData' + result[0].ticketId, 60 * 1, JSON.stringify(result))
       return statusCode.statRes(res, 200, result)
     })
     .catch((err) => { console.log(err) })
@@ -85,7 +85,7 @@ exports.readTicketDataPerPage = (req, res) => {
 // update
 exports.updateTicketData = (req, res) => {
   const ticketId = req.params.id
-  const movieImgUrl = 'http://localhost:2000/img/movie/' + req.file.filename
+  const movieImgUrl = 'https://ciwin-react-tickitz-arkademy.netlify.app/img/movie/' + req.file.filename
   const {
     movieName,
     movieGenre,

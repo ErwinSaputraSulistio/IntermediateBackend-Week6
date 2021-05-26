@@ -9,9 +9,9 @@ const port = process.env.PORT || 3000
 const route = require('./files/routes')
 
 // app - settings
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(cors({origin: ' https://ciwin-react-tickitz-arkademy.netlify.app', credentials: true}))
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
+app.use(cors({origin: 'https://ciwin-react-tickitz-arkademy.netlify.app', credentials: true}))
 app.use(morgan('dev'))
 app.listen(port, '0.0.0.0', () => { console.log('Server telah di-aktivasi dengan port ' + port) })
 
