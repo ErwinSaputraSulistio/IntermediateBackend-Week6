@@ -20,7 +20,7 @@ exports.getTransactionDataPerPage = (queryPages, queryLimits) => {
   let inputOffsetOrNot = ''
   queryPages !== 0 ? (inputLimitOrNot += 'LIMIT ' + queryLimits + ' ') && (inputOffsetOrNot += 'OFFSET ' + calcPaginationLogics) : null
   return new Promise((resolve, reject) => {
-    db.query("SELECT transaction_id, showing_movies.ticket_id, realname AS ticket_buyer, movie_name AS choosen_movie, \
+    db.query("SELECT transaction_id, cinema_name, showing_movies.ticket_id, realname AS ticket_buyer, movie_name AS choosen_movie, \
               DATE(show_date) AS to_date, start_time, end_time, seat_position, how_many_tickets, \
               ticket_price * how_many_tickets AS total_payment FROM transaction_data \
               INNER JOIN user_data ON user_data.userid = transaction_data.user_id \
