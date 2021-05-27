@@ -3,9 +3,10 @@
 </p>
 
 ## :mag_right: About Tickitz
-    Tickitz is a web application for those who want to book tickets online, or to see the list of current showing and 
-    upcoming movies. We assure you that our services will satisfy every customers of ours, and saving their time in 
-    ordering movie tickets. If you got a more better and simple solution ahead of you, why still choose the exhausting one?
+    Tickitz is a web application for those who want to book tickets online, or to see the list of current 
+    showing and upcoming movies. We assure you that our services will satisfy every customers of ours, 
+    and saving their time in ordering movie tickets. If you got a more better and simple solution 
+    ahead of you, why still choose the exhausting one?
 
 ## :pushpin: How to install & start?  
     git clone https://github.com/ErwinSaputraSulistio/Tickitz-BE
