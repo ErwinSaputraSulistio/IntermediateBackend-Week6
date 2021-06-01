@@ -88,3 +88,12 @@ exports.userVerificationSuccess = (userid) => {
     })
   })
 }
+
+// user - reset password
+exports.resetUserPassword = (userpassword, useremail) => {
+  return new Promise((resolve, reject) => {
+    db.query("UPDATE user_data SET userpassword = '" + userpassword + "' WHERE useremail = '" + useremail + "'", (err, result) => {
+      if (!err) { resolve(result.rows) } else { reject(err) }
+    })
+  })
+}

@@ -15,6 +15,9 @@ router
   .delete('/:id', jwtCheck.verifyJwtToken, userDataController.deleteUserData)
   .post('/login', userDataController.postUserLogin)
   .get('/verify/:id', userDataController.verifyNewUser)
+  .post('/reset/send-mail', userDataController.sendResetPasswordMail)
+  .put('/reset/new-password', userDataController.resetPassword)
+  .get('/reset/:id', userDataController.checkIfJwtResetValid)
 
 // exports
 module.exports = router
