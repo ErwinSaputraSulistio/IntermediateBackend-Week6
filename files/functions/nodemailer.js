@@ -119,7 +119,7 @@ exports.resetPassword = (jwtToken, userEmail) => {
                 <img style="width: 240px; height: 80px;" src="https://image.myanimelist.net/ui/uf6p6rEk2dlZoh8DIyYQTScPXcYWVkorZzR5QFff8Dz3qY2oXvvW5x3Hrb-W5JxGHRwmguU8B08LZEEOtbv2G3WKIJ9sNYmr_hbsa72u_rSA04XHa2uGxv_npt3alTiqCO1wZi7NrJbnS1vOPJyjoZkSTvU9Syn4esm53zmf6UE"/>
                 <p style="font-size: 15px;">Aloha ${userEmail}! Untuk melanjutkan proses reset password akun kamu, silahkan menekan tombol di bawah ini :</p>
                 <div style="margin: auto; margin-top: 40px; width: 100%;">
-                   <a class="verifyLink" href="http://localhost:3000/reset-password/${jwtToken}"><div class="verifyBtn">Reset Password</div></a>
+                   <a class="verifyLink" href="https://ciwin-react-tickitz-arkademy.netlify.app/reset-password/${jwtToken}"><div class="verifyBtn">Reset Password</div></a>
                 </div>
              </div>
           </body>
